@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Admin</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<style>
+		* { margin:0; padding:0; font-family: Helvetica, Arial, Sans-Serif; font-size: 16px; }
+		.logo { width: 80px; display: block; margin: 10px auto 10px; transition: width 200ms linear; -webkit-transition: width 200ms linear; }
+		.message { width: 90%; max-width: 400px; margin: 30px auto 0; }
+			.message input { width: 85%; color: #999; padding: 4px 5px; outline: none; border: 1px solid transparent; font-size: 1.2em; border-top: none; border-right: none; border-left: none; }
+				.message input:focus { border-color: #999; }
+			.message button { outline: none; width: 10%; cursor: pointer; padding: 5px 10px; background: #fff; border: none; font-size: 1.2em; color: #999; font-weight: bold; }
+		.options { text-align: center; margin: 20px 0; }
+			.options input { display: none; }
+			.options input:checked + label { color: #27AE60; border-color: #27AE60; }
+			.options label {  border-bottom: 1px solid transparent; padding: 5px 15px; margin: 0 5px; transform: translateY(-1px); display: inline-block;  color: #666; }
+		.users { width: 90%; max-width: 400px; margin: 0 auto; border-collapse: collapse; }
+			.users th { border-bottom: 1px solid #999; }
+			.users td, .users th { text-align: center; padding: 10px; color: #666; }
+			.users td:first-child, .users th:first-child { text-align: left; }
+			.users .selected td { background: #27AE60; color: #fff; }
+	</style>
+</head>
+<body>
+	<img src="../logo.png" alt="FloripaJS - Devs MeetUP" class="logo"/>
+	<div class="message">
+		<input type="text" placeholder="Mensagem"/>
+		<button id="send">></button>
+	</div>
+	<div class="options">
+		<input type="checkbox" id="android"/>
+		<label for="android">Android</label>
+		<input type="checkbox" id="ios">
+		<label for="ios">iOS</label>
+		<input type="checkbox" id="other">
+		<label for="other">Outros</label>
+	</div>
+	<table class="users">
+		<thead>
+			<tr>
+				<th colspan="2">Usuários Conectados</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr connId="d798sa78">
+				<td>Android</td>
+				<td>192.168.200.100</td>
+			</tr>
+			<tr connId="hj321gbh">
+				<td>iOS</td>
+				<td>192.168.200.110</td>
+			</tr>
+			<tr connId="0sa98dsa">
+				<td>Other</td>
+				<td>192.168.200.120</td>
+			</tr>
+			<tr connId="87f6sdd7">
+				<td>Android</td>
+				<td>192.168.200.130</td>
+			</tr>
+			<tr connId="09vcx089">
+				<td>Android</td>
+				<td>192.168.200.140</td>
+			</tr>
+			<tr connId="eq876ws9">
+				<td>Other</td>
+				<td>192.168.200.150</td>
+			</tr>
+		</tbody>
+	</table>
+	<script>
+		(function(d) {
+			var userList = d.querySelector('.users');
+
+			d.querySelector('.options').addEventListener('click', function(event) {
+				selectGroups();
+			});
+
+			d.getElementById('send').addEventListener('click', function() {
+				var sel = getSelected();
+				console.log(sel);
+			});
+
+			userList.addEventListener('click', function(event) {
+				var tg = event.target;
+				if(tg.tagName.match(/tr|td/gi)) {
+					if (tg.tagName.toLowerCase() === 'td')
+						tg = tg.parentNode;
+
+					tg.classList.toggle('selected');
+				}
+			});
+
+			function selectGroups() {
+				var selected = [];
+
+				[].slice.apply(d.querySelectorAll('.options input[type="checkbox"]:checked')).forEach(function(element) {
+					selected.push(element.id);
+				});
+
+				[].slice.apply(userList.querySelectorAll('tbody tr')).forEach(function(element) {
+					var platform = element.querySelector('td').textContent.toLowerCase();
+					if (selected.indexOf(platform) !== -1)
+						element.classList.add('selected');
+					else
+						element.classList.remove('selected');
+				});
+			}
+
+			function getSelected() {
+				var selected = [];
+				[].slice.apply(d.querySelectorAll('.users .selected')).forEach(function(element) {
+					selected.push(element.getAttribute('connId'));
+				});
+
+				return selected;
+			}
+		}(document));
+	</script>
+</body>
+</html>
