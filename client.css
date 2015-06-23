@@ -1,0 +1,58 @@
+* {
+	font-family: Helvetica, Arial, Sans-Serif; 
+	font-size: 16px;
+	margin: 0; 
+	padding: 0; 
+}
+
+
+.logo { 
+	display: block; 
+	margin: 10px auto 20px; 
+}
+	@media (max-width: 600px) {
+		.logo { 
+			width: 80px; 
+		} 
+	}
+
+
+.messages { 
+	margin: 0 auto; 
+	max-width: 400px; 
+	width: 90%; 
+}
+
+
+.title { 
+	border-bottom: 1px solid #ccc; 
+	color: #27AE60; 
+	font-size: 1em; 
+	margin-bottom: 10px; 
+	text-shadow: 1px 1px 1px #ddd; 
+}
+
+
+.content { 
+	color: #333; 
+}
+	.content p { 
+		border-bottom: 1px dashed #ddd; 
+		margin-bottom: 10px; 
+		padding-bottom: 10px; 
+	}
+	.content strong { 
+		color: #27AE60; 
+		font-size: 0.9em; 
+		font-weight: bold; 
+	}
+	@media (max-width: 600px) {
+		.content strong { 
+			display: block; 
+			margin-bottom: 3px; 
+		} 
+	}
+	.content em { 
+		color: #999; 
+		font-size: 0.9em; 
+	}
