@@ -36,12 +36,7 @@ wsServer.on('request', function(request) {
 			serverOp(data, id);
 		else
 			clientOp(data, id);
-		
-		if (admin) {
-			var simplified = getClientsSimplified();
-			console.log('enviando mensagem pro admin')
-			admin.sendUTF(JSON.stringify( { type: 'users', list: simplified} ));
-		}
+
  	});
 });
 
@@ -77,14 +72,25 @@ function checkRepeat(data) {
 
 function serverOp(data, id) {
 	
-	if (data.operation === 'connect' && !admin) {
-		var client = getClientById(id);
-		admin = client;
+	if (data.operation === 'connect') {
+		if (!admin) {
+			var client = getClientById(id);
+			admin = client;
 
-		console.log('Um admin foi conectado.');
+			console.log('Um admin foi conectado.');
+		} else {
+			console.log('Alguem tentou conectar um novo admin')
+		}
+		clients.splice(clients.indexOf(client), 1);
+	} else {
+		clients.forEach(function(element){
+			if (data.to.indexOf(element.cnnid) !== -1)
+				element.sendUTF(JSON.stringify( { msg: data.msg} ));
+		});
+
+		console.log('Server enviou uma mensagem.');
 	}
 
-	clients.splice(clients.indexOf(client), 1);
 }
 
 function clientOp(data, id) {
@@ -93,5 +99,10 @@ function clientOp(data, id) {
 		client.device = data.device;
 
 		console.log('Um client ' + client.device + ' foi conectado.');
+		
+		if (admin) {
+			var simplified = getClientsSimplified();
+			admin.sendUTF(JSON.stringify( { type: 'users', list: simplified} ));
+		}
 	}
 }
