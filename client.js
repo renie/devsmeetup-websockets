@@ -1,7 +1,8 @@
 (function(d) {
 	App.init();
-	
-	var socket		= new WebSocket("ws://192.168.25.144:1337");
+
+	var wsaddress 	= '192.168.25.144:1337', // Alterar aqui endereco do Server WebSocket
+		socket		= new WebSocket('ws://' + wsaddress);
 
 	socket.onopen = function() {
 		console.log('Conexao Aberta.');
@@ -10,7 +11,13 @@
 	};
 
 	socket.onerror = function() {
-		console.log('Erro na conexao.');
+		alert('Erro na conexao.');
+	};
+
+	socket.onmessage = function(message) {
+		var data = JSON.parse(message.data);
+
+		App.newMessage(data.msg);
 	};
 
 	function send(data) {

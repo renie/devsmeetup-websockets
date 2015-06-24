@@ -1,6 +1,7 @@
-var App = (function(){
+var App = (function(d){
 	
-	var device;
+	var device,
+		messages = d.querySelector('.messages .content');
 
 	function init() {
 		setDeviceName();
@@ -19,8 +20,21 @@ var App = (function(){
 		return device;
 	}
 
+	function addMsg(msg) {
+		var newMsg = '<p>',
+			d = new Date();
+
+		newMsg += '<strong>' + d.getHours() + 'h' + ('0'+d.getMinutes()).slice(-2) + ':</strong>';
+		newMsg += '<em>' + msg + '</em>';
+		newMsg += '</p>';
+
+		messages.innerHTML += newMsg;
+
+	}
+
 	return {
 		init : init,
-		getDevice : getDevice
+		getDevice : getDevice,
+		newMessage : addMsg
 	}
-}());
+}(document));

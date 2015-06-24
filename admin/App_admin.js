@@ -11,11 +11,6 @@ var App = (function(d) {
 			selectGroups();
 		});
 
-		d.getElementById('send').addEventListener('click', function() {
-			var sel = getSelected();
-			console.log(sel);
-		});
-
 		userList.addEventListener('click', function(event) {
 			var tg = event.target;
 			if(tg.tagName.match(/tr|td/gi)) {
@@ -46,7 +41,7 @@ var App = (function(d) {
 	function getSelected() {
 		var selected = [];
 		[].slice.apply(d.querySelectorAll('.users .selected')).forEach(function(element) {
-			selected.push(element.getAttribute('connId'));
+			selected.push(element.getAttribute('cnnid'));
 		});
 
 		return selected;

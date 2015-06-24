@@ -1,15 +1,17 @@
 (function(d) {
 	App.init();
 	
-	var socket		= new WebSocket("ws://192.168.25.144:1337");
+	var wsaddress 	= '192.168.25.144:1337', // Alterar aqui endereco do Server WebSocket
+		socket		= new WebSocket('ws://' + wsaddress);
 	
 	socket.onopen = function() {
 		console.log('Conexao Aberta.');
+
 		send({whoami: 'server', operation: 'connect'});
 	};
 
 	socket.onerror = function() {
-		console.log('Erro na conexao.');
+		alert('Erro na conexao.');
 	};
 
 	socket.onmessage = function(message) {
@@ -17,8 +19,21 @@
 
 		if (data.type === 'users')
 			App.updateList(data.list);
-
 	};
+
+	d.getElementById('send').addEventListener('click', function() {
+		var sel = App.getSelected(),
+			data = {
+				whoami: 'server',
+				type : 'msg',
+				msg : d.getElementById('msg').value,
+				to: sel
+			};
+
+		send(data);
+
+		alert('Mensagem enviada!');
+	});
 
 	function send(data) {
 		socket.send(JSON.stringify(data));
