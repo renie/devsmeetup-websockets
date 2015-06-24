@@ -22,8 +22,9 @@ wsServer.on('request', function(request) {
 		id		= HG.newHash();
 	
 	conn.cnnid	= id;
+	conn.sckkey	= request.key;
 
-	checkRepeat(conn.remoteAddress);
+	checkRepeat(conn.sckkey);
 
 	clients.push(conn);
  
@@ -66,12 +67,11 @@ function getClientsSimplified() {
 
 function checkRepeat(data) {
 	clients = clients.filter(function(el) {
-		return el.remoteAddress !== data
+		return el.sckkey !== data;
 	});
 }
 
 function serverOp(data, id) {
-	
 	if (data.operation === 'connect') {
 		if (!admin) {
 			var client = getClientById(id);
