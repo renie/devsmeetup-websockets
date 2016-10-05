@@ -41,6 +41,11 @@ wsServer.on('request', function(request) {
  	});
 });
 
+wsServer.on('close', function(request){
+	checkRepeat(request.sckkey);
+	clientOp({operation: 'disconnect'});
+});
+
 function broadcast(data) {
 	for (var i=0, len = clients.length; i < len; i++) {
 		clients[i].sendUTF(data);
@@ -90,7 +95,6 @@ function serverOp(data, id) {
 
 		console.log('Server enviou uma mensagem.');
 	}
-
 }
 
 function clientOp(data, id) {
@@ -100,6 +104,15 @@ function clientOp(data, id) {
 
 		console.log('Um client ' + client.device + ' foi conectado.');
 		
+		if (admin) {
+			var simplified = getClientsSimplified();
+			admin.sendUTF(JSON.stringify( { type: 'users', list: simplified} ));
+		}
+	}
+
+	if (data.operation === 'disconnect') {
+		console.log('Um client foi conectado.');
+
 		if (admin) {
 			var simplified = getClientsSimplified();
 			admin.sendUTF(JSON.stringify( { type: 'users', list: simplified} ));
