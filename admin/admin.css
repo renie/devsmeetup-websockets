@@ -52,9 +52,17 @@
 	.options input { 
 		display: none; 
 	}
-	.options input:checked + label { 
-		color: #27AE60; 
-		border-color: #27AE60; 
+	.options input:checked + label[for="android"] { 
+		color: #f05d5c; 
+		border-color: #f05d5c; 
+	}
+	.options input:checked + label[for="ios"] { 
+		color: #f37440; 
+		border-color: #f37440; 
+	}
+	.options input:checked + label[for="other"] { 
+		color: #29afd1; 
+		border-color: #29afd1; 
 	}
 	.options label { 
 		border-bottom: 1px solid transparent; 
@@ -83,7 +91,18 @@
 	.users td:first-child, .users th:first-child { 
 		text-align: left; 
 	}
-	.users .selected td { 
-		background: #27AE60; 
+	.users tr {
+		border-bottom: 1px solid #fff;
+	}
+	.users .selected.android td { 
+		background: #f05d5c; 
+		color: #fff; 
+	}
+	.users .selected.ios td { 
+		background: #f37440; 
+		color: #fff; 
+	}
+	.users .selected.other td { 
+		background: #29afd1; 
 		color: #fff; 
 	}

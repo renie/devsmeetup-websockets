@@ -1,23 +1,23 @@
-var webSocketsServerPort = 1337,
-	webSocketServer = require('websocket').server,
-	http = require('http'),
-	HG = require('./HashGenerator'),
-	clients = [],
-	admin = null;
+var webSocketsServerPort	= 1337,
+	webSocketServer			= require('websocket').server,
+	http 					= require('http'),
+	HG 						= require('./HashGenerator'),
+	clients					= [],
+	admin					= null;
 
 var server = http.createServer();
 server.listen(webSocketsServerPort, function() {
 	console.log((new Date()) + " Server is listening on port " + webSocketsServerPort);
 });
 
- 
+
 var wsServer = new webSocketServer({
 	httpServer: server
 });
 
 
 wsServer.on('request', function(request) {
- 
+
 	var conn	= request.accept(null, request.origin),
 		id		= HG.newHash();
 	
@@ -37,7 +37,6 @@ wsServer.on('request', function(request) {
 			serverOp(data, id);
 		else
 			clientOp(data, id);
-
  	});
 });
 

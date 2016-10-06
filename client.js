@@ -1,7 +1,7 @@
 (function(d) {
 	App.init();
 
-	var wsaddress 	= 'localhost:1337', // Alterar aqui endereco do Server WebSocket
+	var wsaddress 	= '192.168.0.13:1337', // Alterar aqui endereco do Server WebSocket
 		socket		= new WebSocket('ws://' + wsaddress);
 
 	socket.onopen = function() {

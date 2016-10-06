@@ -51,7 +51,7 @@ var App = (function(d) {
 		var newList = '';
 
 		data.forEach(function(element, index){
-			newList += '<tr cnnid="' + element.id + '">';
+			newList += '<tr class="' + element.device + '" cnnid="' + element.id + '">';
 			newList += '<td>' + element.device + '</td>';
 			newList += '<td>' + element.ip + '</td>';
 			newList += '</tr>';
